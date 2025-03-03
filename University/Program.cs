@@ -18,7 +18,7 @@ namespace University
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<UniversityDbContext>(options => options.UseSqlite("Data Source = university.db"));
+            builder.Services.AddDbContext<UniversityDbContext>(options => options.UseSqlite("Data Source = Database\\university.db"));
 
             var app = builder.Build();
 

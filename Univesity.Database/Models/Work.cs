@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace University.Models
+namespace University.Database.Models
 {
     public class Work
     {
