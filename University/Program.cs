@@ -19,6 +19,7 @@ namespace University
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddDbContext<UniversityDbContext>(options => options.UseSqlite("Data Source = Database\\university.db"));
+            builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
             var app = builder.Build();
 
@@ -30,10 +31,7 @@ namespace University
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();

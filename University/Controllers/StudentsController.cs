@@ -15,22 +15,6 @@ namespace University.Controllers
             _db = db;
         }
 
-        [HttpPost]
-        [Route("login")]
-        public ActionResult Login(string username, string paswword)
-        {
-            var id = _db.Users.SingleOrDefault(s => s.Username == username && s.Password == paswword)?.Id;
-
-            if (!String.IsNullOrEmpty(id))
-            {
-                return Content(id);
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
-
         [HttpGet]
         [Route("{userId}/works")]
         public IEnumerable<Work> Works(string userId)
@@ -42,14 +26,20 @@ namespace University.Controllers
         [Route("/init")]
         public ActionResult InitDb()
         {
-            _db.Users.Add(new User { Id = "1", Username = "user1", Password = "1234" });
-            _db.Users.Add(new User { Id = "2", Username = "user2", Password = "1234" });
+            _db.Works.RemoveRange(_db.Works.ToArray());
+            _db.Users.RemoveRange(_db.Users.ToArray());
 
-            _db.Works.Add(new Work { Id = 1, Title = "Test 1", UserId = "1", Score = 100, CreatedDate = DateTime.Now.AddDays(-30) });
-            _db.Works.Add(new Work { Id = 2, Title = "Test 2", UserId = "1", Score = 90, CreatedDate = DateTime.Now.AddDays(-40) });
+            _db.Users.AddRange(
+                new User { Id = "1", Username = "user1", Password = "1234" },
+                new User { Id = "2", Username = "user2", Password = "1234" }
+            );
 
-            _db.Works.Add(new Work { Id = 3, Title = "Test 1", UserId = "2", Score = 95, CreatedDate = DateTime.Now.AddDays(-30) });
-            _db.Works.Add(new Work { Id = 4, Title = "Test 2", UserId = "2", Score = 85, CreatedDate = DateTime.Now.AddDays(-40) });
+            _db.Works.AddRange(
+                new Work { Title = "Test 1", UserId = "1", Score = 100, CreatedDate = DateTime.Now.AddDays(-30) },
+                new Work { Title = "Test 2", UserId = "1", Score = 90, CreatedDate = DateTime.Now.AddDays(-40) },
+                new Work { Title = "Test 1", UserId = "2", Score = 95, CreatedDate = DateTime.Now.AddDays(-30) },
+                new Work { Title = "Test 2", UserId = "2", Score = 85, CreatedDate = DateTime.Now.AddDays(-40) }
+            );
 
             _db.SaveChanges();
 
